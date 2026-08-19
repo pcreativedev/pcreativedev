@@ -40,3 +40,13 @@ sistema de temas y marketplace. Y las tiendas que corren encima.
 </a>
 
 </div>
+
+<br/>
+
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/pcreativedev/pcreativedev/output/serpiente-oscura.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/pcreativedev/pcreativedev/output/serpiente.svg" />
+  <img alt="Una serpiente comiéndose mis contribuciones" src="https://raw.githubusercontent.com/pcreativedev/pcreativedev/output/serpiente.svg" />
+</picture>
+</div>
