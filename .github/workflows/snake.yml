@@ -1,0 +1,41 @@
+# La serpiente que se come la rejilla de contribuciones.
+#
+# Deja dos SVG (claro y oscuro) en la rama `output`. Se regenera cada 12 h, así
+# que la portada no se queda con la rejilla del día que se montó.
+name: Serpiente de contribuciones
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  generar:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Generar los SVG
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          # 🔴 EL PRIMER COLOR DE `color_dots` ES LA CELDA VACÍA.
+          #
+          # En el tema oscuro tiene que ser un pizarra visible: contra el fondo
+          # #0d1117 de GitHub, un casi negro desaparece y la rejilla se ve rota
+          # — parece que faltan días, no que estén vacíos.
+          outputs: |
+            dist/serpiente.svg?palette=github-light&color_snake=4E7A00&color_dots=#ebedf0,#d7e8b0,#b8ff5c,#8fc73e,#4E7A00
+            dist/serpiente-oscura.svg?palette=github-dark&color_snake=B8FF5C&color_dots=#2d3343,#3c5a1f,#6b9c2e,#9be03d,#B8FF5C
+
+      - name: Publicar en la rama output
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: "Actualizar la serpiente [skip ci]"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
